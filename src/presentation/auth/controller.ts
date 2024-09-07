@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthRepository, CustomError, RegisterUserDto } from '../../domain';
 import { JwtAdapter } from '../../config';
+import { UserModel } from '../../data/mongodb';
 
 export class AuthController {
 
@@ -29,7 +30,7 @@ export class AuthController {
           
           res.json({
             user,
-            token: await JwtAdapter.generateToken({ email: user.email })
+            token: await JwtAdapter.generateToken({ id: user.id })
           });
 
         })
@@ -39,5 +40,11 @@ export class AuthController {
   loginUser = (req: Request, res: Response) => {
     res.json('Login c');
   }
+
+  getUsers = (req: Request, res: Response) => {
+    UserModel.find()
+      .then(users => res.json(users))
+      .catch(() => res.status(500).json({ error: 'Internal Server Error' }));
+  } 
 
 }
