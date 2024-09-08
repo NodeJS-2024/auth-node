@@ -1,4 +1,4 @@
-import { AuthDatasource, AuthRepository, RegisterUserDto, UserEntity } from '../../domain';
+import { AuthDatasource, AuthRepository, LoginUserDto, RegisterUserDto, UserEntity } from '../../domain';
 
 export class AuthRepositoryImpl implements AuthRepository {
 
@@ -6,8 +6,12 @@ export class AuthRepositoryImpl implements AuthRepository {
     private readonly datasource: AuthDatasource,
   ) {}
 
-  async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
+  register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
     return this.datasource.register(registerUserDto);
+  }
+
+  login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+    return this.datasource.login(loginUserDto);
   }
 
 }
